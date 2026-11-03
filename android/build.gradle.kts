@@ -1,7 +1,36 @@
 allprojects {
+    buildscript {
+        repositories {
+            google()
+            maven {
+                url = uri("https://maven-central.storage-download.googleapis.com/maven2/")
+            }
+            maven {
+                url = uri("https://maven.aliyun.com/repository/public")
+            }
+        }
+        repositories.withType<MavenArtifactRepository>().configureEach {
+            val repoUrl = url.toString()
+            if (repoUrl.contains("repo.maven.apache.org") || repoUrl.contains("repo1.maven.org")) {
+                url = uri("https://maven-central.storage-download.googleapis.com/maven2/")
+            }
+        }
+    }
+
     repositories {
         google()
-        mavenCentral()
+        maven {
+            url = uri("https://maven-central.storage-download.googleapis.com/maven2/")
+        }
+        maven {
+            url = uri("https://maven.aliyun.com/repository/public")
+        }
+    }
+    repositories.withType<MavenArtifactRepository>().configureEach {
+        val repoUrl = url.toString()
+        if (repoUrl.contains("repo.maven.apache.org") || repoUrl.contains("repo1.maven.org")) {
+            url = uri("https://maven-central.storage-download.googleapis.com/maven2/")
+        }
     }
 }
 
